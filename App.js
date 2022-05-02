@@ -15,15 +15,28 @@ export default function App() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
-    fetch('https://rickandmortyapi.com/api/character/?page=1') //42 maximo
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setCharacters(data.results);
-      })
-      .catch((err) => console.log(err));
+    foo();
   }, []);
 
+  function getAllRequests() {
+    const requests = [];
+    for (let i = 1; i < 10; i++) {
+      requests.push(
+        fetch('https://rickandmortyapi.com/api/character/?page=' + i)
+      );
+    }
+    // requests is an array of promises
+    return requests;
+  }
+
+  async function foo() {
+    const charactersAux = [];
+    const responses = await Promise.all(getAllRequests());
+    const data = await Promise.all(responses.map((res) => res.json()));
+    data.forEach((object) => charactersAux.push(...object.results));
+
+    setCharacters(charactersAux);
+  }
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor="#D5A021" />

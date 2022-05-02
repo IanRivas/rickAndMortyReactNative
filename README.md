@@ -20,3 +20,8 @@ then you can use
 useState refreshing false
 refreshing={refreshing}
 onRefresh={{() => setRefreshing in true , loadData, setRefesing in false}}
+
+# Todo
+
+- styles
+- show more button
